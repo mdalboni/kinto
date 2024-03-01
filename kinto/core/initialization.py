@@ -3,7 +3,6 @@ import re
 import warnings
 from datetime import datetime
 from dateutil import parser as dateparser
-import random
 
 from pyramid.events import NewRequest, NewResponse
 from pyramid.exceptions import ConfigurationError
@@ -16,6 +15,7 @@ from pyramid.interfaces import IAuthenticationPolicy
 from pyramid.settings import asbool, aslist
 from pyramid_multiauth import (MultiAuthenticationPolicy,
                                MultiAuthPolicySelected)
+import secrets
 
 try:
     import newrelic.agent
@@ -135,7 +135,7 @@ def setup_backoff(config):
         if backoff is not None:
             backoff_percentage = config.registry.settings['backoff_percentage']
             if backoff_percentage is not None:
-                if random.random() < (float(backoff_percentage) / 100.0):
+                if secrets.SystemRandom().random() < (float(backoff_percentage) / 100.0):
                     event.response.headers['Backoff'] = str(backoff)
             else:
                 event.response.headers['Backoff'] = str(backoff)
