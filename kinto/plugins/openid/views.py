@@ -183,7 +183,7 @@ def get_token(request):
         "redirect_uri": redirect_uri,
         "grant_type": "authorization_code",
     }
-    resp = requests.post(token_endpoint, data=data)
+    resp = requests.post(token_endpoint, data=data, timeout=60)
 
     # The IdP response is forwarded to the client in the querystring/location hash.
     # (eg. callback=`http://localhost:3000/#tokens=`)
