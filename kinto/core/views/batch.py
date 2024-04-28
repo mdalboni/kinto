@@ -123,7 +123,7 @@ def post_batch(request):
         request.errors.add("body", "requests", error_msg)
         return
 
-    if any([batch.path in req["path"] for req in requests]):
+    if any(batch.path in req["path"] for req in requests):
         error_msg = f"Recursive call on {batch.path} endpoint is forbidden."
         request.errors.add("body", "requests", error_msg)
         return

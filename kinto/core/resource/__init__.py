@@ -1115,8 +1115,8 @@ class Resource:
                     raise_invalid(self.request, **error_details)
 
             if operator in (COMPARISON.IN, COMPARISON.EXCLUDE):
-                all_integers = all([isinstance(v, int) for v in value])
-                all_strings = all([isinstance(v, str) for v in value])
+                all_integers = all(isinstance(v, int) for v in value)
+                all_strings = all(isinstance(v, str) for v in value)
                 has_invalid_value = (field == self.model.id_field and not all_strings) or (
                     field == self.model.modified_field and not all_integers
                 )

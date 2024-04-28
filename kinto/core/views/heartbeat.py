@@ -71,7 +71,7 @@ def get_heartbeat(request):
         logger.error(error_msg)
 
     # If any has failed, return a 503 error response.
-    has_error = not all([v or v is None for v in status.values()])
+    has_error = not all(v or v is None for v in status.values())
     if has_error:
         request.response.status = 503
 
