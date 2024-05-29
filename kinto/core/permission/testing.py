@@ -149,7 +149,7 @@ class PermissionTest:
         self.permission.remove_principal(principal)
 
         retrieved = self.permission.get_object_permissions(object_id)
-        self.assertEqual(retrieved, {"read": set([principal])})
+        self.assertEqual(retrieved, {"read": {principal}})
 
     def test_authenticated_is_returned_for_everybody(self):
         user_id = "foo"
@@ -283,8 +283,8 @@ class PermissionTest:
         self.permission.add_principal_to_ace("id3", "write", "user2")
         per_object_ids = self.permission.get_accessible_objects(["user1", "group"])
         self.assertEqual(sorted(per_object_ids.keys()), ["id1", "id2"])
-        self.assertEqual(per_object_ids["id1"], set(["write", "object:create"]))
-        self.assertEqual(per_object_ids["id2"], set(["read"]))
+        self.assertEqual(per_object_ids["id1"], {"write", "object:create"})
+        self.assertEqual(per_object_ids["id2"], {"read"})
 
     def test_accessible_objects_supports_empty_list(self):
         per_object_ids = self.permission.get_accessible_objects(["user1", "group"], [])
@@ -411,7 +411,7 @@ class PermissionTest:
         self.permission.add_principal_to_ace("/url/a/id/1", "obj:del", "user1")
 
         self.permission.replace_object_permissions(
-            "/url/a/id/1", {"write": ["user1"], "new": set(["user2"])}
+            "/url/a/id/1", {"write": ["user1"], "new": {"user2"}}
         )
 
         permissions = self.permission.get_object_permissions("/url/a/id/1")

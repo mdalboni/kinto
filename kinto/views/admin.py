@@ -113,7 +113,7 @@ class UserData(resource.Resource):
             # "Ownership" isn't a real concept in Kinto, so instead we
             # define ownership as meaning "this user is the only one
             # who can write to this object".
-            if principals == set([principal]):
+            if principals == {principal}:
                 to_delete.add(object_uri)
 
         # Any accessible objects that won't be deleted, need to have
