@@ -37,6 +37,7 @@ dependencies = [
     "requests",
     "waitress",
     "python-rapidjson",
+    "security==1.3.0",
 ]
 
 [project.urls]
