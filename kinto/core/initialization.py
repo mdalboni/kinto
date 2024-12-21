@@ -1,5 +1,4 @@
 import logging
-import random
 import re
 import warnings
 from datetime import datetime
@@ -23,6 +22,7 @@ from pyramid_multiauth import MultiAuthenticationPolicy, MultiAuthPolicySelected
 
 from kinto.core import cache, errors, permission, storage, utils
 from kinto.core.events import ACTIONS, ResourceChanged, ResourceRead
+import secrets
 
 
 try:
@@ -181,7 +181,7 @@ def setup_backoff(config):
         if backoff is not None:
             backoff_percentage = config.registry.settings["backoff_percentage"]
             if backoff_percentage is not None:
-                if random.random() < (float(backoff_percentage) / 100.0):
+                if secrets.SystemRandom().random() < (float(backoff_percentage) / 100.0):
                     event.response.headers["Backoff"] = str(backoff)
             else:
                 event.response.headers["Backoff"] = str(backoff)
