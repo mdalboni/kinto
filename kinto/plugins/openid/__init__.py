@@ -69,7 +69,7 @@ class OpenIDConnectPolicy(base_auth.CallbackAuthenticationPolicy):
         uri = self.oid_config["userinfo_endpoint"]
         # Opaque access token string. Fetch user info from profile.
         try:
-            resp = requests.get(uri, headers={"Authorization": "Bearer " + access_token})
+            resp = requests.get(uri, headers={"Authorization": "Bearer " + access_token}, timeout=60)
             resp.raise_for_status()
             userprofile = resp.json()
             return userprofile
