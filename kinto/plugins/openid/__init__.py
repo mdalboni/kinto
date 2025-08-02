@@ -9,6 +9,7 @@ from kinto.core import utils as core_utils
 from kinto.core.openapi import OpenAPI
 
 from .utils import fetch_openid_config
+from security import safe_requests
 
 
 @implementer(IAuthenticationPolicy)
@@ -69,7 +70,7 @@ class OpenIDConnectPolicy(base_auth.CallbackAuthenticationPolicy):
         uri = self.oid_config["userinfo_endpoint"]
         # Opaque access token string. Fetch user info from profile.
         try:
-            resp = requests.get(uri, headers={"Authorization": "Bearer " + access_token})
+            resp = safe_requests.get(uri, headers={"Authorization": "Bearer " + access_token})
             resp.raise_for_status()
             userprofile = resp.json()
             return userprofile
